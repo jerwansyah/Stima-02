@@ -4,18 +4,20 @@
 
 import sys
 
-if len(sys.argv) < 1:
+if len(sys.argv) != 2:
     exit(1)
 file = sys.argv[1]
 
 global graph;
 
 class node:
+    # Kelas node dengan atribut nama dan array node yang masuk ke node
     def __init__(self, name, in_degree):
         self.name = name
         self.in_degree = in_degree
 
 def roman_value(num):
+    # Fungsi untu mengubah angka ke angka romawi, maksimal 39
     roman = ''
     if (num // 10 >= 1):
         num = num % 10
@@ -35,15 +37,18 @@ def roman_value(num):
     return roman
 
 def parsefile():
+    # Prosedur membaca satu file
     global graph
     graph = list();
     f = open('../test/' + file, 'r')
     for line in f:
-        line = line.replace(' ','').replace('.','').replace('\n','').split(',');
-        graph.append(node(str(line[0]), list(line[1:])))
+        if line != '\n':
+            line = line.replace('.','').replace('\n','').split(', ');
+            graph.append(node(line[0], list(line[1:])))
     f.close()
 
 def pop_zero_in_degree_nodes():
+    # Fungsi untuk mencari (array) node dengan derajat nol
     global graph
     temp = list()
     temp1 = list()
@@ -52,7 +57,7 @@ def pop_zero_in_degree_nodes():
             temp.append(node.name)
             temp1.append(node)
     for node in temp1:
-        for node2 in graph:
+        for _ in graph:
             try:
                 graph.remove(node)
             except ValueError:
@@ -66,6 +71,7 @@ def pop_zero_in_degree_nodes():
     return temp;
 
 def toposort():
+    # Fungsi untuk melakukan topological sort
     global graph
     topo_sorted = list()
     while (len(graph) > 0):
@@ -73,9 +79,11 @@ def toposort():
     return topo_sorted
 
 def print_output(sorted_list):
+    # Fungsi untuk mencetak hasil sorting
+    print("Solusi dari " + file + " adalah: ")
     i = 1
     for course in sorted_list:
-        print("Semester " + roman_value(i) + "\t: " + ', '.join(course))
+        print("Semester " + roman_value(i) + "\t: " + ', '.join(course), end=".\n")
         i += 1
 
 if __name__ == '__main__':
