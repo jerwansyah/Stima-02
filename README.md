@@ -1,7 +1,7 @@
 # Tugas Kecil 2 IF2211 Strategi Algoritma
 
 ## About
-Program pemecah masalah _topological sort_ menggunakan algoritma _Decrease and Conquer_.
+Program pemecah masalah _topological sort_ menggunakan algoritma _decrease and conquer_.
 
 Algoritma _Decrease and Conquer_
 > Algoritma _Decrease and Conquer_ (DnC) yang diimplementasikan untuk melakukan  _topological sort_ adalah mengurangi node dengan derajat masuk 0 dan menghapus node yang bertetangga dengan node tersebut secara rekursif hingga graf tidak memiliki node. Node hasil pengurangan bertahap dari graf merupakan hasil dari _topological sorting_ graf. Algoritma DnC yang diimplementasikan merupakan variasi DnC pengurangan dengan ukuran berubah.

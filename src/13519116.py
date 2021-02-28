@@ -13,9 +13,9 @@ answer = list()
 
 class node:
     # Kelas node dengan atribut nama node dan array node yang masuk ke node
-    def __init__(self, name, in_degree):
+    def __init__(self, name, inDegree):
         self.name = name
-        self.in_degree = in_degree
+        self.inDegree = inDegree
 
 def roman_value(num):
     # Fungsi untuk mengubah angka ke angka romawi
@@ -37,7 +37,7 @@ def roman_value(num):
             roman += 'I'
     return roman
 
-def parsefile():
+def parseFile():
     # Prosedur membaca satu file
     global graph
     f = open('../test/' + file, 'r')
@@ -52,9 +52,9 @@ def dnc():
     global graph, answer
     temp1 = list()
     temp2 = list()
-    if (len(graph) != 0):
+    if (len(graph) > 0):
         for node in graph:
-            if len(node.in_degree) == 0:
+            if len(node.inDegree) == 0:
                 temp1.append(node.name)
                 temp2.append(node)
         answer.append(list(temp1))
@@ -67,12 +67,12 @@ def dnc():
         for node in graph:
             for course in temp1:
                 try:
-                    node.in_degree.remove(course)
+                    node.inDegree.remove(course)
                 except ValueError:
                     continue
         dnc()
 
-def print_output():
+def printOutput():
     # Fungsi untuk mencetak hasil sorting
     print("Solusi dari " + file + " adalah: ")
     i = 1
@@ -81,6 +81,6 @@ def print_output():
         i += 1
 
 if __name__ == '__main__':
-    parsefile()
+    parseFile()
     dnc()
-    print_output()
+    printOutput()
