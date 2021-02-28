@@ -5,11 +5,7 @@ H1, A, G1.
 D2, C.
 H2, A, G2.
 G1, E, F.
-I1, H1.
-I2, H1, D2.
 A.
-I3, H2.
 G2, F, E.
-I4, H2.
 E, A, D1.
 F, E.

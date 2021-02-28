@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# topo.py
+# 13519116.py
 # 13519116 Jeane Mikha Erwansyah
 
 import sys
@@ -8,16 +8,17 @@ if len(sys.argv) != 2:
     exit(1)
 file = sys.argv[1]
 
-global graph;
+graph = list()
+answer = list()
 
 class node:
-    # Kelas node dengan atribut nama dan array node yang masuk ke node
+    # Kelas node dengan atribut nama node dan array node yang masuk ke node
     def __init__(self, name, in_degree):
         self.name = name
         self.in_degree = in_degree
 
 def roman_value(num):
-    # Fungsi untu mengubah angka ke angka romawi, maksimal 39
+    # Fungsi untuk mengubah angka ke angka romawi
     roman = ''
     if (num // 10 >= 1):
         num = num % 10
@@ -39,7 +40,6 @@ def roman_value(num):
 def parsefile():
     # Prosedur membaca satu file
     global graph
-    graph = list();
     f = open('../test/' + file, 'r')
     for line in f:
         if line != '\n':
@@ -47,45 +47,40 @@ def parsefile():
             graph.append(node(line[0], list(line[1:])))
     f.close()
 
-def pop_zero_in_degree_nodes():
-    # Fungsi untuk mencari (array) node dengan derajat nol
-    global graph
-    temp = list()
+def dnc():
+    # Prosedur untuk melakukan topological sorting dengan decrease and conquer
+    global graph, answer
     temp1 = list()
-    for node in graph:
-        if len(node.in_degree) == 0:
-            temp.append(node.name)
-            temp1.append(node)
-    for node in temp1:
-        for _ in graph:
-            try:
-                graph.remove(node)
-            except ValueError:
-                continue
-    for node in graph:
-        for course in temp:
-            try:
-                node.in_degree.remove(course)
-            except ValueError:
-                continue
-    return temp;
+    temp2 = list()
+    if (len(graph) != 0):
+        for node in graph:
+            if len(node.in_degree) == 0:
+                temp1.append(node.name)
+                temp2.append(node)
+        answer.append(list(temp1))
+        for node in temp2:
+            for _ in graph:
+                try:
+                    graph.remove(node)
+                except ValueError:
+                    continue
+        for node in graph:
+            for course in temp1:
+                try:
+                    node.in_degree.remove(course)
+                except ValueError:
+                    continue
+        dnc()
 
-def toposort():
-    # Fungsi untuk melakukan topological sort
-    global graph
-    topo_sorted = list()
-    while (len(graph) > 0):
-        topo_sorted.append(pop_zero_in_degree_nodes())
-    return topo_sorted
-
-def print_output(sorted_list):
+def print_output():
     # Fungsi untuk mencetak hasil sorting
     print("Solusi dari " + file + " adalah: ")
     i = 1
-    for course in sorted_list:
+    for course in answer:
         print("Semester " + roman_value(i) + "\t: " + ', '.join(course), end=".\n")
         i += 1
 
 if __name__ == '__main__':
     parsefile()
-    print_output(toposort())
+    dnc()
+    print_output()
